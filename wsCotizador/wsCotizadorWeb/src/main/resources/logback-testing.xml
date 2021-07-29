@@ -1,8 +1,7 @@
 <configuration>
 
 	<!-- PROPERTIES -->
-	<!-- <property name="DEV_HOME" value="/opt/IBM/Logs/CotizadorAuto" /> -->
-	<property name="DEV_HOME" value="C:/1doc/Logs/CotizadorAuto" />
+	<property name="DEV_HOME" value="/opt/IBM/Logs/CotizadorAuto" /> 
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 	    <file>${DEV_HOME}/CotizadorWebWS.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">

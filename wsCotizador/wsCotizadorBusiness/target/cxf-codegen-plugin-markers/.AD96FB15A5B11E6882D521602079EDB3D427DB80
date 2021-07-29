@@ -1,1 +1,0 @@
-L[-b, file:/C:/Users/diego/Desktop/cardif/wsCotizador/wsCotizadorBusiness/src/main/resources/response_binding.xml, -validate=false, -frontend, jaxws21, -wsdlLocation, classpath:wsdl/AACHCarClaimInformation.wsdl, file:/C:/Users/diego/Desktop/cardif/wsCotizador/wsCotizadorBusiness/src/main/resources/wsdl/AACHCarClaimInformation.wsdl]

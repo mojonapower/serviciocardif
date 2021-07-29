@@ -29,8 +29,10 @@
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc14</artifactId>
 			<version>10.2.0.5</version>
+			<!--DL20210709: cuando se entregue a qa se deben sacar estas dos lineas -->
 			<scope>system</scope>
 			<systemPath>C:\Users\diego\Desktop\cardif\ojdbc14-10.2.0.5.jar</systemPath>
+			<!--DL20210709: FIN -->
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -122,6 +124,7 @@
 							<goal>wsdl2java</goal>
 						</goals>
 					</execution>
+					<!--  DL: 20210729 descomentar cuando se pase a qa
 					<execution>
 						<id>generate-sources</id>
 						<phase>generate-sources</phase>
@@ -149,6 +152,7 @@
 							<goal>wsdl2java</goal>
 						</goals>
 					</execution>
+					DL: 20210729 FIN -->
 				</executions>
 			</plugin>
 		</plugins>
