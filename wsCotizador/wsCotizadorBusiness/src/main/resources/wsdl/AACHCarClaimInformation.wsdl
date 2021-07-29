@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Sebastián Peña (BNP Paribas Cardif Seguros de Vida S.A.) -->
+<wsdl:definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:ns="http://cardif.cl/Schema/ESO/Dictionary/v1.0" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ebmns_get="http://cardif.cl/Schema/EBM/AACHCarClaimInformation/get/v1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:ns2="http://cardif.cl/Schema/ESO/MessageHeader/v1.0" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://cardif.cl/Schema/ESO/Error/v1.0" xmlns:ns4="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:ns3="http://cardif.cl/Schema/ESO/Result/v1.0" xmlns:tns="http://cardif.cl/Service/EBSC/AACHCarClaimInformation/v1" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://cardif.cl/Service/EBSC/AACHCarClaimInformation/v1">
+	<wsdl:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" location="oasis-200401-wss-wssecurity-secext-1_0.xsd"/>
+	<wsdl:types>
+		<xs:schema>
+			<xs:import namespace="http://cardif.cl/Schema/EBM/AACHCarClaimInformation/get/v1.0" schemaLocation="get_AACHCarClaimInformation_v1.0_EBM.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="get_Message">
+		<wsdl:part name="In" element="ebmns_get:get_AACHCarClaimInformation_REQ"/>
+	</wsdl:message>
+	<wsdl:message name="get_MessageResponse">
+		<wsdl:part name="Out" element="ebmns_get:get_AACHCarClaimInformation_RSP"/>
+	</wsdl:message>
+	<wsdl:message name="get_FaultMessage">
+		<wsdl:part name="Fault" element="ebmns_get:get_AACHCarClaimInformation_FRSP"/>
+	</wsdl:message>
+	<wsdl:message name="wssecuritytoken">
+		<wsdl:part name="SecPol" element="ns4:Security"/>
+	</wsdl:message>
+	<wsdl:portType name="AACHCarClaimInformationPortType">
+		<wsdl:operation name="getList">
+			<wsdl:input message="tns:get_Message"/>
+			<wsdl:output message="tns:get_MessageResponse"/>
+			<wsdl:fault name="DefaultFault" message="tns:get_FaultMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AACHCarClaimInformationSOAP12Binding" type="tns:AACHCarClaimInformationPortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getList">
+			<soap12:operation soapAction="http://cardif.cl/EBS/AACHCarClaimInformation/get"/>
+			<wsdl:input>
+				<soap12:header message="tns:wssecuritytoken" part="SecPol" use="literal"/>
+				<soap12:body parts="In" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="Out" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="DefaultFault">
+				<soap12:fault name="DefaultFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AACHCarClaimInformationService">
+		<wsdl:port name="AACHCarClaimInformationPort" binding="tns:AACHCarClaimInformationSOAP12Binding">
+			<soap12:address location="http://cardif.cl/EBS/AACHCarClaimInformation"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

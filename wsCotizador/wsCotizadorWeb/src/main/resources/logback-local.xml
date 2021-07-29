@@ -1,0 +1,44 @@
+<configuration>
+<!-- PROPERTIES -->
+	<!-- <property name="DEV_HOME" value="/opt/IBM/Logs/CotizadorAuto" /> -->
+	<property name="DEV_HOME" value="C:/1doc/Logs/CotizadorAuto" />
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>${DEV_HOME}/CotizadorWebWS.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${DEV_HOME}/CotizadorWebWS.%d.log</fileNamePattern>
+                     <maxHistory>7</maxHistory>
+		</rollingPolicy>
+                
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+
+	<!-- LOGGERS -->
+	<logger name="info.source4code.soap.http.cxf" level="DEBUG">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="org.springframework" level="DEBUG">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="org.apache.cxf" level="DEBUG">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="org.apache.cxf.services" level="DEBUG">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="cl.cardif" level="debug" additivity="false">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<!-- APPLICATION LOG LEVEL -->
+	<root level="DEBUG">
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

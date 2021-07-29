@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appdeployment:Deployment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:appdeployment="http://www.ibm.com/websphere/appserver/schemas/5.0/appdeployment.xmi" xmi:id="Deployment_1241112964096">
+  <deployedObject xmi:type="appdeployment:ApplicationDeployment" xmi:id="ApplicationDeployment_1241112964096" startingWeight="1" warClassLoaderPolicy="SINGLE">
+    <classloader xmi:id="Classloader_1241112964096" mode="PARENT_LAST"/>
+    <modules xmi:type="appdeployment:WebModuleDeployment" xmi:id="WebModuleDeployment_1241112964096" startingWeight="10000" uri="wsCotizadorWeb-0.0.1-SNAPSHOT.war">
+      <classloader xmi:id="Classloader_1241112964097"/>
+    </modules>
+  </deployedObject>
+</appdeployment:Deployment>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>wsCotizadorWeb</display-name>
+	
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+    
+	<!-- Spring listener -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>    
+	   
+	<!-- Context app parameters  -->
+	<!-- Parametros SW AACH -->
+	<env-entry> 
+		<env-entry-name>aachEndPoint</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 		
+		<env-entry-value>http://10.96.17.45:8080/EBS/AACHCarClaimInformation</env-entry-value> 		
+	</env-entry>   
+	<env-entry> 
+		<env-entry-name>aachUserWS</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>VSA_test</env-entry-value> 
+	</env-entry>   
+	<env-entry> 
+		<env-entry-name>aachPassWS</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>8928bnp</env-entry-value> 
+	</env-entry> 
+	<env-entry> 
+		<env-entry-name>aachQueryType</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>1</env-entry-value> 
+	</env-entry>  
+	<env-entry> 
+		<env-entry-name>aachCompanyRut</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>0968376403</env-entry-value> 
+	</env-entry>  
+	<env-entry> 
+		<env-entry-name>aachConsumerCode</env-entry-name> 
+		<env-entry-type>java.lang.Integer</env-entry-type> 
+		<env-entry-value>1</env-entry-value> 
+	</env-entry> 
+	<env-entry> 
+		<env-entry-name>aachConsumerName</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>CotizadorAuto</env-entry-value> 
+	</env-entry> 
+	<env-entry> 
+		<env-entry-name>aachCountryCode</env-entry-name> 
+		<env-entry-type>java.lang.Integer</env-entry-type> 
+		<env-entry-value>1</env-entry-value> 
+	</env-entry> 
+	<env-entry> 
+		<env-entry-name>aachCountryName</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>Chile</env-entry-value> 
+	</env-entry>    
+	<env-entry> 
+		<env-entry-name>aachChannelCode</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>NI</env-entry-value> 
+	</env-entry>
+	<env-entry> 
+		<env-entry-name>aachChannelMode</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>NI</env-entry-value> 
+	</env-entry>
+	<env-entry> 
+		<env-entry-name>aachUserName</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>test</env-entry-value> 
+	</env-entry>
+	<env-entry> 
+		<env-entry-name>aachUserObs</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>test</env-entry-value> 
+	</env-entry>
+	<env-entry> 
+		<env-entry-name>aachAniosAntiguedadSiniestros</env-entry-name> 
+		<env-entry-type>java.lang.Integer</env-entry-type> 
+		<env-entry-value>2</env-entry-value> 
+	</env-entry>
+	 
+	<!--FIN Parametros SW AACH -->
+	<!-- Parametros SW Autenticar -->
+	<env-entry> 
+		<env-entry-name>validaUsuarioEndpoint</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>https://10.170.116.12:8443/EBS/Authentication</env-entry-value> 
+	</env-entry>  
+	<env-entry> 
+		<env-entry-name>traceTypeMessageID</env-entry-name> 
+		<env-entry-type>java.lang.Integer</env-entry-type> 
+		<env-entry-value>1440690659</env-entry-value> 
+	</env-entry>  
+	<env-entry> 
+		<env-entry-name>countryCode</env-entry-name> 
+		<env-entry-type>java.lang.Integer</env-entry-type> 
+		<env-entry-value>1</env-entry-value> 
+	</env-entry>  
+	<env-entry> 
+		<env-entry-name>countryName</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>CL</env-entry-value> 
+	</env-entry>   
+	<env-entry> 
+		<env-entry-name>consumerCode</env-entry-name> 
+		<env-entry-type>java.lang.Integer</env-entry-type> 
+		<env-entry-value>1</env-entry-value> 
+	</env-entry>  
+	<env-entry> 
+		<env-entry-name>consumerName</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>AMER</env-entry-value> 
+	</env-entry> 
+	<env-entry> 
+		<env-entry-name>autenticarDominio</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>AMER</env-entry-value> 
+	</env-entry>   
+	<!-- FIN Parametros SW Autenticar -->
+	<!-- PARAMETROS COTIZADOR -->
+	 <env-entry> 
+         <env-entry-name>parametrosCotizadorEdadMinima</env-entry-name> 
+         <env-entry-type>java.lang.Integer</env-entry-type> 
+         <env-entry-value>18</env-entry-value> 
+     </env-entry> 
+	 <env-entry> 
+         <env-entry-name>parametrosCotizadorEdadMaxima</env-entry-name> 
+         <env-entry-type>java.lang.Integer</env-entry-type> 
+         <env-entry-value>71</env-entry-value> 
+     </env-entry> 
+     <env-entry> 
+         <env-entry-name>parametrosCotizadorAntiguedadVehiculoMaximo</env-entry-name> 
+         <env-entry-type>java.lang.Integer</env-entry-type> 
+         <env-entry-value>15</env-entry-value> 
+     </env-entry>
+     <!-- Parametros Factores -->
+     <env-entry> 
+		<env-entry-name>factorAntiguedad</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>1</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorEdad</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>2</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorSexo</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>3</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorEstadoCivil</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>4</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorIva</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>5</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorHijos</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>6</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorSocioEconomico</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>7</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorZona</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>8</env-entry-value> 
+	</env-entry>  
+	 <env-entry> 
+		<env-entry-name>factorPromocion</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>9</env-entry-value> 
+	</env-entry>  
+	<env-entry> 
+		<env-entry-name>factorRut</env-entry-name> 
+		<env-entry-type>java.lang.Long</env-entry-type> 
+		<env-entry-value>10</env-entry-value> 
+	</env-entry>  
+     <!-- Fin Parametros Factores -->
+     
+     
+	 <!-- Cxf Servlet -->
+	<servlet>
+		<servlet-name>cxf</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>cxf</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+		<env-entry> 
+		<env-entry-name>ramo1</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>16</env-entry-value> 
+	</env-entry> 
+	
+	<env-entry> 
+		<env-entry-name>ramo2</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>79</env-entry-value> 
+	</env-entry> 
+	
+		<env-entry> 
+		<env-entry-name>ramo3</env-entry-name> 
+		<env-entry-type>java.lang.String</env-entry-type> 
+		<env-entry-value>80</env-entry-value> 
+	</env-entry> 
+	
+		<env-entry>
+			<description>se establece (true/false)  si se debe consultar con la Aach</description>
+			<env-entry-name>aachConsultaServicio</env-entry-name>
+			<env-entry-type>java.lang.Boolean</env-entry-type>
+			<env-entry-value>true</env-entry-value>
+		</env-entry>
+</web-app>

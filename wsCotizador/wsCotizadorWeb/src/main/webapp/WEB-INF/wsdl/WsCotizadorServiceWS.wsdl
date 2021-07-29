@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.wsCotizador.cotizador.cardif.cl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WsCotizadorServiceWS" targetNamespace="http://ws.wsCotizador.cotizador.cardif.cl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://ws.wsCotizador.cotizador.cardif.cl/" schemaLocation="WsCotizadorServiceWS_schema1.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="cotizarResponse">
+    <part element="tns:cotizarResponse" name="parameters">
+    </part>
+  </message>
+  <message name="cotizar">
+    <part element="tns:cotizar" name="parameters">
+    </part>
+  </message>
+  <portType name="CotizadorServiceWSImpl">
+    <operation name="cotizar">
+      <input message="tns:cotizar">
+    </input>
+      <output message="tns:cotizarResponse">
+    </output>
+    </operation>
+  </portType>
+  <binding name="CotizadorServiceWSImplPortBinding" type="tns:CotizadorServiceWSImpl">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="cotizar">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="WsCotizadorServiceWS">
+    <port binding="tns:CotizadorServiceWSImplPortBinding" name="CotizadorServiceWSImplPort">
+      <soap:address location="http://localhost:9080/wsCotizadorWeb/WsCotizadorServiceWS"/>
+    </port>
+  </service>
+</definitions>

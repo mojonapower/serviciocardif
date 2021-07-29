@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.wsCotizador.cotizador.cardif.cl/" targetNamespace="http://ws.wsCotizador.cotizador.cardif.cl/" version="1.0">
+
+  <xs:element name="cotizar" type="tns:cotizar"/>
+
+  <xs:element name="cotizarResponse" type="tns:cotizarResponse"/>
+
+  <xs:complexType name="cotizar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="parametrosCotizador" type="tns:parametrosCotizador"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="parametrosCotizador">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anio" type="xs:int"/>
+      <xs:element minOccurs="0" name="canal" type="xs:int"/>
+      <xs:element minOccurs="0" name="codigoProducto" type="xs:int"/>
+      <xs:element minOccurs="0" name="comuna" type="xs:int"/>
+      <xs:element minOccurs="0" name="estadoCivil" type="xs:string"/>
+      <xs:element minOccurs="0" name="fechaNacimiento" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="idCotizacionSocio" type="xs:string"/>
+      <xs:element minOccurs="0" name="intermediario" type="xs:int"/>
+      <xs:element minOccurs="0" name="marca" type="xs:int"/>
+      <xs:element minOccurs="0" name="modelo" type="xs:int"/>
+      <xs:element minOccurs="0" name="nombres" type="xs:string"/>
+      <xs:element minOccurs="0" name="patente" type="xs:string"/>
+      <xs:element minOccurs="0" name="region" type="xs:int"/>
+      <xs:element minOccurs="0" name="rutAsegurado" type="xs:string"/>
+      <xs:element minOccurs="0" name="sexo" type="xs:string"/>
+      <xs:element minOccurs="0" name="version" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cotizarResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ResultadoCotizacion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

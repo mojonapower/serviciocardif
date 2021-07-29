@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- edited with XMLSpy v2015 rel. 3 sp1 (x64) (http://www.altova.com) by Sebastián Peña (BNP Paribas Cardif Seguros de Vida S.A.) -->
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema"
+	 xmlns:tns="http://cardif.cl/Schema/EBM/AACHCarClaimInformation/get/v1.0"
+	 xmlns:pref="http://cardif.cl/Schema/ESO/MessageHeader/v1.0"
+	 xmlns:pref1="http://cardif.cl/Schema/ESO/Dictionary/v1.0"
+	 targetNamespace="http://cardif.cl/Schema/EBM/AACHCarClaimInformation/get/v1.0"
+	 version="1.0.0"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<s:import namespace="http://cardif.cl/Schema/ESO/MessageHeader/v1.0" schemaLocation="eso/MessageHeader_v1.0_ESO.xsd"/>
+	<s:import namespace="http://cardif.cl/Schema/ESO/Dictionary/v1.0" schemaLocation="eso/Dictionary_v1.0_ESO.xsd"/>
+	<s:element name="get_AACHCarClaimInformation_REQ" type="tns:get_AACHCarClaimInformation_REQ_Type">
+		<s:annotation>
+			<s:documentation>
+                Elementos y tipos complejos que definen el requerimiento de la operacion
+            </s:documentation>
+		</s:annotation>
+	</s:element>
+	<s:complexType name="get_AACHCarClaimInformation_REQ_Type">
+		<s:sequence>
+			<s:element ref="pref:RequestHeader"/>
+			<s:element name="Body">
+				<s:complexType>
+					<s:annotation>
+						<s:documentation/>
+					</s:annotation>
+					<s:sequence>
+						<s:element ref="tns:getAACHCarClaimInformation"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="getAACHCarClaimInformation" type="tns:getAACHCarClaimInformation"/>
+	<s:complexType name="getAACHCarClaimInformation">
+		<s:sequence>
+			<s:element name="queryType" type="s:string"/>
+			<s:element name="rut" type="s:string" minOccurs="0"/>
+			<s:element name="plate" type="s:string" minOccurs="0"/>
+			<s:element name="group" type="s:string" minOccurs="0"/>
+			<s:element name="claimNumber" type="s:string" minOccurs="0"/>
+			<s:element name="dateFrom" type="s:string" minOccurs="0"/>
+			<s:element name="dateTo" type="s:string" minOccurs="0"/>
+			<s:element name="companyRut" type="s:string"/>
+			<s:element name="user" type="s:string"/>
+			<s:element name="pass" type="s:string"/>
+			<s:element name="userName" type="s:string"/>
+			<s:element name="userObs" type="s:string"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="get_AACHCarClaimInformation_RSP" type="tns:get_AACHCarClaimInformation_RSP_Type">
+		<s:annotation>
+			<s:documentation>
+                Elemento que define la respuesta a la operacion
+            </s:documentation>
+		</s:annotation>
+	</s:element>
+	<s:complexType name="get_AACHCarClaimInformation_RSP_Type">
+		<s:sequence>
+			<s:element ref="pref:ResponseHeader"/>
+			<s:element name="Body">
+				<s:complexType>
+					<s:annotation>
+						<s:documentation/>
+					</s:annotation>
+					<s:sequence>
+						<s:element ref="tns:getListCarClaimResponse"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="getListCarClaimResponse" type="tns:getListCarClaimResponse"/>
+	<s:complexType name="getListCarClaimResponse">
+		<s:sequence>
+			<s:element name="return" type="tns:response" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="response">
+		<s:sequence>
+			<s:any namespace="##other" processContents="skip"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="get_AACHCarClaimInformation_FRSP" type="tns:get_AACHCarClaimInformation_FRSP_Type">
+		<s:annotation>
+			<s:documentation>
+                Elementos y tipos complejos que definen la respuesta en caso de error, utilizando los tipos de error definidos
+            </s:documentation>
+		</s:annotation>
+	</s:element>
+	<s:complexType name="get_AACHCarClaimInformation_FRSP_Type">
+		<s:sequence>
+			<s:element ref="pref:ResponseHeader"/>
+			<s:element name="Body">
+				<s:complexType>
+					<s:annotation>
+						<s:documentation/>
+					</s:annotation>
+					<s:sequence>
+						<s:element ref="tns:errorResponse"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="errorResponse" type="tns:errorResponse">
+		<s:annotation>
+			<s:documentation>
+                Elementos y tipos complejos que definen un error en la operacion
+            </s:documentation>
+		</s:annotation>
+	</s:element>
+	<s:complexType name="errorResponse">
+		<s:sequence>
+			<s:element name="return" type="tns:error" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="error">
+		<s:sequence>
+			<s:element name="codigo_error" type="s:string" minOccurs="0"/>
+			<s:element name="glosa_error" type="s:string" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+</s:schema>

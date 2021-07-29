@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!-- Importación por defecto para uso de CXF -->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<!-- Configuración para leer parámetros de contexto en web.xml -->
+	<bean
+		class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer" />
+
+	<!-- Beans con la implementacion del servicio -->
+	<bean name="cotizadorService"
+		class="cl.cardif.cotizador.wsCotizador.ws.CotizadorServiceWSImpl" />
+	<bean name="parametrosService"
+		class="cl.cardif.cotizador.wsCotizador.ws.ParametrosServiceWSImpl" />
+
+	<!-- Endpoints para los servicios -->
+	<jaxws:endpoint id="cotizadorServiceEndpoint" implementor="#cotizadorService"
+		address="/cotizadorService" />
+	<jaxws:endpoint id="parametrosServiceEndpoint" implementor="#parametrosService"
+		address="/parametrosService" />
+</beans>

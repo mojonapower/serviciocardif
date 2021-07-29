@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?><schema xmlns:tns="http://cardif.cl/Schema/EBM/Usuario/autenticar/v1.0" xmlns:pref1="http://cardif.cl/Schema/ESO/Dictionary/v1.0" xmlns:pref="http://cardif.cl/Schema/ESO/MessageHeader/v1.0" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://cardif.cl/Schema/EBM/Usuario/autenticar/v1.0" version="1.0.6">
+    
+    <import namespace="http://cardif.cl/Schema/ESO/MessageHeader/v1.0" schemaLocation="eso/MessageHeader_v1.0_ESO.xsd"/>
+    <import namespace="http://cardif.cl/Schema/ESO/Dictionary/v1.0" schemaLocation="eso/Dictionary_v1.0_ESO.xsd"/>
+
+    <annotation>
+        <documentation>
+            XSD que define tipos para autenticación de usuario, compuesto por mensajes que representan
+            petición y respuesta del servidor, además de los siguientes tipos complejos:
+            "autenticar" compuesto por usuario, clave y dominio (de LDAP)
+            "error" compuesto por código de error y su glosa
+        </documentation>
+    </annotation>
+    
+    <element name="autenticar_Usuario_RSP" type="tns:autenticar_Usuario_RSP_Type">
+        <annotation>
+            <documentation>
+                Elemento que define la respuesta a la operación
+            </documentation>
+        </annotation>
+    </element>
+    <complexType name="autenticar_Usuario_RSP_Type">
+        <sequence>
+            <element ref="pref:ResponseHeader"/>
+            <element name="Body">
+                <complexType>
+                    <sequence>
+                        <element ref="tns:autenticarResponse"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="autenticarResponse" type="tns:autenticarResponse"/>
+    <complexType name="autenticarResponse">
+        <sequence>
+            <element name="respuesta" type="tns:respuesta"/>
+        </sequence>
+    </complexType>
+    <complexType name="respuesta">
+        <sequence>
+            <element name="usuario_autenticado" type="boolean"/>
+        </sequence>
+    </complexType>
+    
+    <element name="autenticar_Usuario_REQ" type="tns:autenticar_Usuario_REQ_Type">
+        <annotation>
+            <documentation>
+                Elementos y tipos complejos que definen el requerimiento de la operación
+            </documentation>
+        </annotation>
+    </element>
+    <complexType name="autenticar_Usuario_REQ_Type">
+        <sequence>
+            <element ref="pref:RequestHeader"/>
+            <element name="Body">
+                <complexType>
+                    <annotation>
+                        <documentation/>
+                    </annotation>
+                    <sequence>
+                        <element ref="tns:autenticar"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="autenticar" type="tns:autenticar"/>
+    <complexType name="autenticar">
+        <sequence>
+            <element name="nombre_usuario" type="string"/>
+            <element name="clave" type="string"/>
+            <element name="dominio" type="string"/>
+        </sequence>
+    </complexType>
+    
+    <element name="autenticar_Usuario_FRSP" type="tns:autenticar_Usuario_FRSP_Type">
+        <annotation>
+            <documentation>
+                Elementos y tipos complejos que definen la respuesta en caso de error, utilizando los tipos de error definidos
+            </documentation>
+        </annotation>
+    </element>
+    <complexType name="autenticar_Usuario_FRSP_Type">
+        <sequence>
+            <element ref="pref:ResponseHeader"/>
+            <element name="Body">
+                <complexType>
+                    <annotation>
+                        <documentation/>
+                    </annotation>
+                    <sequence>
+                        <element ref="tns:errorResponse"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+    
+    <element name="errorResponse" type="tns:errorResponse">
+        <annotation>
+            <documentation>
+                Elementos y tipos complejos que definen un error en la operación
+            </documentation>
+        </annotation>
+    </element>
+    <complexType name="errorResponse">
+        <sequence>
+            <element minOccurs="0" name="return" type="tns:error"/>
+        </sequence>
+    </complexType>
+    <complexType name="error">
+        <sequence>
+            <element name="codigo_error" type="string"/>
+            <element minOccurs="0" name="glosa_error" type="string"/>
+        </sequence>
+    </complexType>
+</schema>
