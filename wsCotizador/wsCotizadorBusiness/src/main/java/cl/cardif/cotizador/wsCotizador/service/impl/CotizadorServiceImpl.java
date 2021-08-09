@@ -135,12 +135,13 @@ public final class CotizadorServiceImpl implements CotizadorService {
      * @since 1.0
      */
     public SalidaCotizacion cotizar(ParametrosCotizador parametros) throws GeneralException {
-        logger.debug("cotizar-Inicia parametros:" + parametros.toString());
+    	logger.error("PRUEBA MACARENA");
+    	logger.error("cotizar-Inicia parametros:" + parametros.toString());
 
         // To de salida de cotizacion.        
         EstadoOperacionCotizacion estadoOperacion = validaParametrosEntrada(parametros);
         if (estadoOperacion.getCodigoEstado() != 0) {
-             logger.debug("cotizar-validacion de parametros fallida");
+             logger.error("cotizar-validacion de parametros fallida");
             return new SalidaCotizacion(estadoOperacion);
         }
 
@@ -152,15 +153,15 @@ public final class CotizadorServiceImpl implements CotizadorService {
             parametros.setInsuredRut(parametros.getInsuredRut().replace(".", "").replace("-", ""));
 
             String rutRelleno = StringUtil.rellenaPorLaIzquierda(parametros.getInsuredRut(), 10, '0').toUpperCase();
-            logger.debug("cotizar-obtenerInfoEquifax:" + rutRelleno);
+            logger.error("cotizar-obtenerInfoEquifax:" + rutRelleno);
             Equifax datosEquifax = cotizadorDAO.obtenerInfoEquifax(rutRelleno);
             if (datosEquifax != null) {
-                logger.debug("cotizar-obtenerInfoEquifax datosEquifax:" + datosEquifax.toString());
+                logger.error("cotizar-obtenerInfoEquifax datosEquifax:" + datosEquifax.toString());
                 if (parametros.getInsuredNames() == null || "".equals(parametros.getInsuredNames())) {
                     parametros.setInsuredNames(datosEquifax.getNombre());
                 }
             }else{
-                logger.debug("cotizar-obtenerInfoEquifax datosEquifax: Asegurado no encontrado en equifax");
+                logger.error("cotizar-obtenerInfoEquifax datosEquifax: Asegurado no encontrado en equifax");
             }
 
             List<TarifaBase> tarifaBase = cotizadorDAO.obtenerTarifaBase(parametros.getChannel(),
@@ -168,7 +169,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
                     parametros.getModel(), parametros.getVersion());
 
             if (tarifaBase != null && tarifaBase.size() > 0) {
-                logger.debug("cotizar-tarifaBase.size():" + tarifaBase.size());
+                logger.error("cotizar-tarifaBase.size():" + tarifaBase.size());
 
                 // Crea cabecera de producto (ID) en hash hmProductoDeducible
                 Map<Long, DetalleProducto> hmProductoDeducible = getHashDeducibles(tarifaBase);                
@@ -193,12 +194,12 @@ public final class CotizadorServiceImpl implements CotizadorService {
                 }
                 else
                 {
-                	logger.debug("cotizar-factorSisgen:" + factorSisgen);
+                	logger.error("cotizar-factorSisgen:" + factorSisgen);
                     ResultadoCotizacion resultadoCotizacion = new ResultadoCotizacion(parametros);
                     resultadoCotizacion.setSisgen(redondearADosDecimales(factorSisgen));                
                     List<ProductoTO> listadoProductos = getListaProductos(hmProductoDeducible, hmProductoFormula, hmFactorValor, factorSisgen);
                     salidaCotizacion = new SalidaCotizacion(null, null, resultadoCotizacion, listadoProductos);                
-                    logger.debug("cotizar-salidaCotizacion:" + salidaCotizacion.toString());
+                    logger.error("cotizar-salidaCotizacion:" + salidaCotizacion.toString());
                                   
                     Marshaller m = (JAXBContext.newInstance(SalidaCotizacion.class)).createMarshaller();
                     StringWriter sW = new StringWriter();
@@ -213,7 +214,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
                 throw new CotizadorException("Tarifa base no encontrada");                
             }
             salidaCotizacion.setEstadoOperacion(new EstadoOperacionCotizacion(Long.valueOf("0"), "Cotización correcta"));
-            logger.debug("cotizar-Fin Ok");
+            logger.error("cotizar-Fin Ok");
         } catch (CotizadorException e) {
             salidaCotizacion.setEstadoOperacion(new EstadoOperacionCotizacion(Long.valueOf("2"), "Error al cotizar:" + e.getMessage()));
             cotizadorDAO.insertarLog(parametros, e.getMessage());
@@ -239,7 +240,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
     private int getEdadAsegurado(Equifax datosEquifax, Date fechaNacimientoEntrante){
         Date fechaNacEq = null;
         int edadAsegurado = 0;
-        logger.debug("cotizar-Formateando fecha de equifax.");
+        logger.error("cotizar-Formateando fecha de equifax.");
         String fechaNacimientoEquifax = "";
         if (datosEquifax != null) {
             fechaNacimientoEquifax = datosEquifax.getFechaNacimiento();
@@ -248,16 +249,16 @@ public final class CotizadorServiceImpl implements CotizadorService {
             fechaNacEq = FechasUtil.convierteStringADate(fechaNacimientoEquifax, new SimpleDateFormat("yyyyMMdd"));
         }
 
-        logger.debug("cotizar-fechaNacEq:" + fechaNacEq);
+        logger.error("cotizar-fechaNacEq:" + fechaNacEq);
         if (fechaNacEq == null || fechaNacimientoEntrante.after(fechaNacEq)) {
-            logger.debug("cotizar-Se utilizará fecha de nacimiento de parametros de entrada de ws."
+            logger.error("cotizar-Se utilizará fecha de nacimiento de parametros de entrada de ws."
                     + fechaNacimientoEntrante);
             edadAsegurado = FechasUtil.calculaEdad(fechaNacimientoEntrante);
-            logger.debug("cotizar-edadAsegurado ws:" + edadAsegurado);
+            logger.error("cotizar-edadAsegurado ws:" + edadAsegurado);
         } else {
-            logger.debug("cotizar-Se utilizará fecha de nacimiento de equifax." + fechaNacEq);
+            logger.error("cotizar-Se utilizará fecha de nacimiento de equifax." + fechaNacEq);
             edadAsegurado = FechasUtil.calculaEdad(fechaNacEq);
-            logger.debug("cotizar-edadAsegurado equifax:" + edadAsegurado);
+            logger.error("cotizar-edadAsegurado equifax:" + edadAsegurado);
         }
         return edadAsegurado;
     }
@@ -272,7 +273,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
 
         // Pobla detalle de deducibles del producto y lo deja en hash hmProductoDeducible.
         List<Deducible> listDeducible = new ArrayList<Deducible>();
-        logger.debug("cotizar-obteniendo deducibles de los productos");
+        logger.error("cotizar-obteniendo deducibles de los productos");
         Long idProdTmp = null;
         for (int i = 0; i < tarifaBase.size(); i++) {
             if (i + 1 < tarifaBase.size()) {
@@ -315,24 +316,24 @@ public final class CotizadorServiceImpl implements CotizadorService {
                     valorFactor = null;
                     if (!hmFactorValor.containsKey(listFormula.get(i).getIdFactor())) {
                         if (identificadorFactor.equals((Long) getPrincipal.lookup("factorAntiguedad"))) {
-                            logger.debug("cotizar-obteniendo factor ANTIGUEDAD");
+                            logger.error("cotizar-obteniendo factor ANTIGUEDAD");
                             String aniosAntiguedad = String.valueOf(Long.valueOf(FechasUtil.anoActual())
                                     - parametros.getYear());
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,
                                     aniosAntiguedad);
                         } else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorEdad"))) {
-                            logger.debug("cotizar-obteniendo factor EDAD");
+                            logger.error("cotizar-obteniendo factor EDAD");
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,
                                     String.valueOf(edadAsegurado));
                             if (valorFactor == null) {
-                                logger.debug("no se encuentra factor para edad: " + edadAsegurado);
+                                logger.error("no se encuentra factor para edad: " + edadAsegurado);
                                 throw new CotizadorException("Sin factor para la edad ingresada:" + edadAsegurado);
                             }
                         } else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorIva"))) {
-                            logger.debug("cotizar-obteniendo factor Iva");
+                            logger.error("cotizar-obteniendo factor Iva");
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor, "IVA");
                         } else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorSexo"))) {
-                            logger.debug("cotizar-obteniendo factor SEXO");
+                            logger.error("cotizar-obteniendo factor SEXO");
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,
                                     parametros.getGender());
                             if (valorFactor == null && datosEquifax != null) {
@@ -340,7 +341,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
                                         datosEquifax.getSexo());
                             }
                         } else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorEstadoCivil"))) {
-                            logger.debug("cotizar-obteniendo factor ESTADO_CIVIL");
+                            logger.error("cotizar-obteniendo factor ESTADO_CIVIL");
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,
                                     parametros.getMaritalStatus());
                             if (valorFactor == null && datosEquifax != null) {
@@ -349,19 +350,19 @@ public final class CotizadorServiceImpl implements CotizadorService {
                             }
                         } /*
                         else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorProfesion")) && datosEquifax != null) {
-                            logger.debug("cotizar-obteniendo factor PROFESION");
+                            logger.error("cotizar-obteniendo factor PROFESION");
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,String.valueOf(datosEquifax.getCodProfesion()));                                 
                         }
                         */ else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorHijos"))){                          
-                        	logger.debug("cotizar-obteniendo factor Hijos");
+                        	logger.error("cotizar-obteniendo factor Hijos");
                         	valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,parametros.getInsuredRut());                        	
                         }	else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorSocioEconomico"))
                                 && datosEquifax != null) {
-                            logger.debug("cotizar-obteniendo factor SOCIO_ECONOMICO");
+                            logger.error("cotizar-obteniendo factor SOCIO_ECONOMICO");
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,
                                     String.valueOf(datosEquifax.getCodGse()));
                         } else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorZona"))) {
-                            logger.debug("cotizar-obteniendo factor ZONA_GEOGRAFICA");
+                            logger.error("cotizar-obteniendo factor ZONA_GEOGRAFICA");
                             Double factorZona = null;
                             /* Orden de prioridad ciudad entrante (viene comuna), region entrante, comuna
                             equifax,region equifax.*/
@@ -386,26 +387,26 @@ public final class CotizadorServiceImpl implements CotizadorService {
                             }
 
                         } else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorPromocion"))) {
-                            logger.debug("cotizar-obteniendo factor PROMOCION");
+                            logger.error("cotizar-obteniendo factor PROMOCION");
                             valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,
                                     LLAVE_PROMOCION);
                             
                         } else if (identificadorFactor.equals((Long) getPrincipal.lookup("factorRut"))){                          
-                        	logger.debug("cotizar-obteniendo factor Hijos");
+                        	logger.error("cotizar-obteniendo factor Hijos");
                         	valorFactor = obtenerValor(parametros.getIntermediate(), identificadorFactor,parametros.getInsuredRut());                        	
                         }
                         
                         else {
-                            logger.debug("cotizar-factor no configurado en la aplicacion, no registrado en FactoresEnum.");
+                            logger.error("cotizar-factor no configurado en la aplicacion, no registrado en FactoresEnum.");
                             // Asigna valor por defecto si no se encuentra el identificador del factor.
                             valorFactor = asignaValorDefecto(listFormula.get(i).getIdTipoFactor());
                         }
                         if (valorFactor == null) {
-                            logger.debug("cotizar-llave no registrada en detalle de factores.");
+                            logger.error("cotizar-llave no registrada en detalle de factores.");
                             // Asigna valor por defecto si no encuentra la llave en el detalle de los factores.
                             valorFactor = asignaValorDefecto(listFormula.get(i).getIdTipoFactor());
                         }
-                        logger.debug("cotizar-obteniendo identificadorFactor: " + identificadorFactor + " valorFactor:"
+                        logger.error("cotizar-obteniendo identificadorFactor: " + identificadorFactor + " valorFactor:"
                                 + valorFactor);
                         hmFactorValor.put(identificadorFactor, valorFactor);
                     }
@@ -483,7 +484,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
      * @since 1.0
      */
     private Double obtenerSISGEN(ParametrosCotizador parametros) throws GeneralException {
-        logger.debug("obtenerSISGEN-Inicia parametros:" + parametros.toString());
+        logger.error("obtenerSISGEN-Inicia parametros:" + parametros.toString());
         RutListaNegra rutListaNegra = null;
         Double factorSisgen = null;
 
@@ -503,7 +504,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
             	return Double.parseDouble("-1");
             }
 
-            logger.debug("obtenerSISGEN-Fin Ok");
+            logger.error("obtenerSISGEN-Fin Ok");
         } catch (CotizadorDaoException e) {
             logger.error("obtenerSISGEN-Fin Error CotizadorDaoException:" + e.getMessage(), e);
             throw e;
@@ -531,7 +532,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
      * @since 1.0
      */
     private Double obtenerInformacionAACH(ParametrosCotizador parametros) throws GeneralException {
-        logger.debug("obtenerInformacionAACH-Inicia parametros:" + parametros.toString());
+        logger.error("obtenerInformacionAACH-Inicia parametros:" + parametros.toString());
         Double factorSisgenTMP;
         Double montoSiniestros = null;
         Long cantidadSiniestros = null;
@@ -558,7 +559,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
             GetAACHCarClaimInformationRSPType infoSalida = service.getList(getAachRequest(parametros));
 
             // Nodo Padre "<SISGEN>" con los siniestros.
-            logger.debug("obtenerInformacionAACH-obteniendo Nodo Padre <SISGEN> con los siniestros.");            
+            logger.error("obtenerInformacionAACH-obteniendo Nodo Padre <SISGEN> con los siniestros.");            
             
             String estado = infoSalida.getResponseHeader().getResult().getStatus();            
             if(ESTADO_EXITO_AACH.equals(estado)){
@@ -570,12 +571,12 @@ public final class CotizadorServiceImpl implements CotizadorService {
                     logger.error(nodo.getFirstChild().getFirstChild().getFirstChild().getTextContent());
                 }else{
                     // Listado de siniestros.
-                    logger.debug("obtenerInformacionAACH-Listado de siniestros.");
+                    logger.error("obtenerInformacionAACH-Listado de siniestros.");
                     NodeList list = nodo.getChildNodes();
                     Node siniestro;
                     cantidadSiniestros = Long.valueOf(list.getLength());
         
-                    logger.debug("obtenerInformacionAACH-Recorro los siniestros encontrados.");
+                    logger.error("obtenerInformacionAACH-Recorro los siniestros encontrados.");
                     // Se recorre el siniestro patrfyra encontrar su costo
                     Map<String, String> map = new HashMap<String, String>();
                     for (int i = 0; i < list.getLength(); i++) {
@@ -605,7 +606,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
 							//obtengo numero de siniestro wladimir
 							 if (listSiniestro.item(x).getLocalName().equalsIgnoreCase("NroSiniestro")) {
 	                                nroSiniestro = listSiniestro.item(x).getFirstChild().getNodeValue();
-	                                logger.debug("Numero de Siniestro:" + nroSiniestro);
+	                                logger.error("Numero de Siniestro:" + nroSiniestro);
 	                                map.put(nroSiniestro, valor);
                                 
 	                                
@@ -618,7 +619,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
                         	
                             if (listSiniestro.item(x).getLocalName().equalsIgnoreCase("CostoTotal")) {
                                 String costoTotal = listSiniestro.item(x).getFirstChild().getNodeValue();
-                                logger.debug("obtenerInformacionAACH-Monto encontrado:" + costoTotal);
+                                logger.error("obtenerInformacionAACH-Monto encontrado:" + costoTotal);
                                 montoSiniestros += Double.valueOf(costoTotal);
                                 break;
                             }
@@ -629,9 +630,9 @@ public final class CotizadorServiceImpl implements CotizadorService {
                     cantidadSiniestros=(long) map.size();
                 }
             }            
-            logger.debug("obtenerInformacionAACH-Fin Ok");
+            logger.error("obtenerInformacionAACH-Fin Ok");
            }else{
-        	   logger.debug("obtenerInformacionAACH-Fin False");        	  
+        	   logger.error("obtenerInformacionAACH-Fin False");        	  
            }
         
         } catch (Exception e) {
@@ -639,13 +640,13 @@ public final class CotizadorServiceImpl implements CotizadorService {
             montoSiniestros = null;
             cantidadSiniestros = null;
         } finally{
-            logger.debug("obtenerInformacionAACH-montoSiniestros:" + montoSiniestros);
-            logger.debug("obtenerInformacionAACH-cantidadSiniestros:" + cantidadSiniestros);
+            logger.error("obtenerInformacionAACH-montoSiniestros:" + montoSiniestros);
+            logger.error("obtenerInformacionAACH-cantidadSiniestros:" + cantidadSiniestros);
             String rutRelleno = StringUtil.rellenaPorLaIzquierda(parametros.getInsuredRut().toUpperCase(), 10, '0');
             logger.info("Se obtendra factor AACH contingencia para rut[" + rutRelleno + "]");
             factorSisgenTMP = cotizadorDAO.obtenerFactorAach(rutRelleno, cantidadSiniestros, montoSiniestros);
-            logger.debug("obtenerInformacionAACH-factorSisgenTMP:" + factorSisgenTMP);
-            logger.debug("obtenerInformacionAACH-Fin");
+            logger.error("obtenerInformacionAACH-factorSisgenTMP:" + factorSisgenTMP);
+            logger.error("obtenerInformacionAACH-Fin");
         }
         return factorSisgenTMP;
     }
@@ -710,14 +711,14 @@ public final class CotizadorServiceImpl implements CotizadorService {
      * @since 1.0
      */
     private List<Formula> obtenerFormula(Long idProducto) throws GeneralException {
-        logger.debug("obtenerFormula-Inicia idProducto:" + idProducto);
+        logger.error("obtenerFormula-Inicia idProducto:" + idProducto);
         List<Formula> formula = null;
         try {
             formula = cotizadorDAO.obtenerFormula(idProducto);
             if (formula != null) {
-                logger.debug("obtenerFormula-formula:" + formula.size());
+                logger.error("obtenerFormula-formula:" + formula.size());
             }
-            logger.debug("obtenerFormula-Fin Ok");
+            logger.error("obtenerFormula-Fin Ok");
         } catch (CotizadorDaoException e) {
             logger.error("obtenerFormula-Fin Error CotizadorDaoException:" + e.getMessage(), e);
             throw e;
@@ -746,7 +747,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
      * @since 1.0
      */
     private Double obtenerValor(Long idSocio, Long idFactor, String llaveEntrante) throws GeneralException {
-        logger.debug("obtenerValor-Inicia idSocio:" + idSocio + " idFactor:" + idFactor + " llave:" + llaveEntrante);
+        logger.error("obtenerValor-Inicia idSocio:" + idSocio + " idFactor:" + idFactor + " llave:" + llaveEntrante);
         Double valor = null;
         String llave = null;
         try {
@@ -754,8 +755,8 @@ public final class CotizadorServiceImpl implements CotizadorService {
                 llave = llaveEntrante.toUpperCase();
             }
             valor = cotizadorDAO.obtenerValorFactor(idSocio, idFactor, llave);
-            logger.debug("obtenerValor-valor:" + valor);
-            logger.debug("obtenerValor-Fin Ok");
+            logger.error("obtenerValor-valor:" + valor);
+            logger.error("obtenerValor-Fin Ok");
         } catch (CotizadorDaoException e) {
             logger.error("obtenerValorFactor idSocio:" + idSocio + ", idFactor:" + idFactor + ", llave:" + llave + ". "
                     + e.getMessage(), e);
@@ -782,7 +783,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
     }
 
     private Double asignaValorDefecto(Long factor) {
-        logger.debug("se asigna valor por defecto.");
+        logger.error("se asigna valor por defecto.");
         Double valor = null;
         if (SUMA.equals(factor) || RESTA.equals(factor)) {
             valor = Double.valueOf(0);
@@ -794,7 +795,7 @@ public final class CotizadorServiceImpl implements CotizadorService {
     }
 
     private EstadoOperacionCotizacion validaParametrosEntrada(ParametrosCotizador parametros) throws GeneralException {
-        logger.debug("validaParametrosEntrada-Inicia");
+        logger.error("validaParametrosEntrada-Inicia");
         try {
             EstadoOperacionCotizacion estadoOperacion = new EstadoOperacionCotizacion();
             estadoOperacion.setCodigoEstado(Long.valueOf("0"));
@@ -841,8 +842,8 @@ public final class CotizadorServiceImpl implements CotizadorService {
                     estadoOperacion =  new EstadoOperacionCotizacion(codigoError,"La antiguedad del vehiculo no es permitida.");
                 }
             }
-            logger.debug(estadoOperacion.getDescripcionEstado());
-            logger.debug("validaParametrosEntrada-Fin Ok");
+            logger.error(estadoOperacion.getDescripcionEstado());
+            logger.error("validaParametrosEntrada-Fin Ok");
             return estadoOperacion;
         } catch (NamingException e) {
             logger.error("validaParametrosEntrada-Fin Error Exception:" + e.getMessage(), e);

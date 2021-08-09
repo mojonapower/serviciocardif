@@ -15,28 +15,28 @@
 	
 
 	<!-- LOGGERS -->
-	<logger name="info.source4code.soap.http.cxf" level="DEBUG">
+	<logger name="info.source4code.soap.http.cxf" level="ERROR">
 		<appender-ref ref="FILE" />
 	</logger>
 
-	<logger name="org.springframework" level="DEBUG">
+	<logger name="org.springframework" level="ERROR">
 		<appender-ref ref="FILE" />
 	</logger>
 
-	<logger name="org.apache.cxf" level="DEBUG">
+	<logger name="org.apache.cxf" level="ERROR">
 		<appender-ref ref="FILE" />
 	</logger>
 
-	<logger name="org.apache.cxf.services" level="DEBUG">
+	<logger name="org.apache.cxf.services" level="ERROR">
 		<appender-ref ref="FILE" />
 	</logger>
 
-	<logger name="cl.cardif" level="debug" additivity="false">
+	<logger name="cl.cardif" level="ERROR" additivity="false">
 		<appender-ref ref="FILE" />
 	</logger>
 
 	<!-- APPLICATION LOG LEVEL -->
-	<root level="DEBUG">
+	<root level="ERROR">
 		<appender-ref ref="FILE" />
 	</root>
 

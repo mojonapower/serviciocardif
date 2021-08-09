@@ -31,7 +31,7 @@
 			<version>10.2.0.5</version>
 			<!--DL20210709: cuando se entregue a qa se deben sacar estas dos lineas -->
 			<scope>system</scope>
-			<systemPath>C:\Users\diego\Desktop\cardif\ojdbc14-10.2.0.5.jar</systemPath>
+			<systemPath>C:\utilsDev\ojdbc14-10.2.0.5.jar</systemPath>
 			<!--DL20210709: FIN -->
 		</dependency>
 		<dependency>
